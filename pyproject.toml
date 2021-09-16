@@ -18,7 +18,22 @@ click = "^8.0.1"
 requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
+coverage = {extras = ["toml"], version = "^5.5"}
+pytest = "^6.2.5"
+pytest-cov = "^2.12.1"
+pytest-mock = "^3.6.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["wikipedia_cli"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100

@@ -1,2 +1,6 @@
 /.python-version
 __pycache__/
+/.coverage
+/dist/
+.pytest_cache/
+/.nox/
