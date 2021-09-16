@@ -49,3 +49,10 @@ def install(session, *args):
     poetry = Poetry(session)
     with poetry.export("--dev") as requirements:
         session.install(f"--constraint={requirements}", *args)
+
+@nox.session(python=["3.9", "3.8"])
+def tests(session):
+    args = session.posargs or ["--cov", "-m", "not e2e"]
+    install_package(session)
+    install(session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock")
+    session.run("pytest", *args)
