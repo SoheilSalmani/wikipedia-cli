@@ -19,8 +19,8 @@ from . import wikipedia, __version__
 def main(lang):
     try:
         data = wikipedia.get_random(lang=lang)
-    except requests.RequestError as error:
-        raise click.ClickException(error.msg)
+    except requests.RequestException as error:
+        raise click.ClickException(str(error))
 
     title = data["title"]
     extract = data["extract"]
