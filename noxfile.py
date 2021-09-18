@@ -5,7 +5,7 @@ import nox
 
 package = "wikipedia_cli"
 locations = "src", "tests", "noxfile.py"
-nox.options.sessions = "lint", "tests"
+nox.options.sessions = "lint", "safety", "tests"
 
 
 class Poetry:
@@ -65,6 +65,14 @@ def lint(session):
         "flake8-import-order",
     )
     session.run("flake8", *args)
+
+
+@nox.session(python=["3.9"])
+def safety(session):
+    poetry = Poetry(session)
+    with poetry.export("--dev") as requirements:
+        install(session, "safety")
+        session.run("safety", "check", f"--file={requirements}", "--bare")
 
 
 @nox.session(python=["3.9", "3.8"])
