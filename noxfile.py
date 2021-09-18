@@ -6,6 +6,7 @@ import nox
 package = "wikipedia_cli"
 locations = "src", "tests", "noxfile.py"
 
+
 class Poetry:
     def __init__(self, session):
         self.session = session
@@ -25,13 +26,12 @@ class Poetry:
             yield requirements.name
 
     def version(self):
-        output = self.session.run(
-            "poetry", "version", external=True, silent=True
-        )
+        output = self.session.run("poetry", "version", external=True, silent=True)
         return output.split()[1]
 
     def build(self, *args):
         self.session.run("poetry", "build", *args, external=True, silent=True)
+
 
 def install_package(session):
     poetry = Poetry(session)
@@ -46,10 +46,12 @@ def install_package(session):
         "--no-deps", "--force-reinstall", f"dist/{package}-{version}-py3-none-any.whl"
     )
 
+
 def install(session, *args):
     poetry = Poetry(session)
     with poetry.export("--dev") as requirements:
         session.install(f"--constraint={requirements}", *args)
+
 
 @nox.session(python=["3.9", "3.8"])
 def tests(session):
