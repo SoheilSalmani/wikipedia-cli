@@ -60,6 +60,7 @@ def lint(session):
     install(
         session,
         "flake8",
+        "flake8-bandit",
         "flake8-black",
         "flake8-bugbear",
         "flake8-import-order",
