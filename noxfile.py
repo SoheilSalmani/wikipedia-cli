@@ -58,6 +58,14 @@ def tests(session):
     install(session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock")
     session.run("pytest", *args)
 
+
+@nox.session(python=["3.9", "3.8"])
+def lint(session):
+    args = session.posargs or locations
+    install(session, "flake8", "flake8-black")
+    session.run("flake8", *args)
+
+
 @nox.session(python=["3.9"])
 def black(session):
     args = session.posargs or locations
