@@ -5,6 +5,7 @@ import nox
 
 package = "wikipedia_cli"
 locations = "src", "tests", "noxfile.py"
+nox.options.sessions = "lint", "tests"
 
 
 class Poetry:
