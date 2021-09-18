@@ -4,6 +4,7 @@ import tempfile
 import nox
 
 package = "wikipedia_cli"
+locations = "src", "tests", "noxfile.py"
 
 class Poetry:
     def __init__(self, session):
@@ -56,3 +57,9 @@ def tests(session):
     install_package(session)
     install(session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock")
     session.run("pytest", *args)
+
+@nox.session(python=["3.9"])
+def black(session):
+    args = session.posargs or locations
+    install(session, "black")
+    session.run("black", *args)
