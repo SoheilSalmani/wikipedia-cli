@@ -54,18 +54,24 @@ def install(session, *args):
 
 
 @nox.session(python=["3.9", "3.8"])
+def lint(session):
+    args = session.posargs or locations
+    install(
+        session,
+        "flake8",
+        "flake8-black",
+        "flake8-bugbear",
+        "flake8-import-order",
+    )
+    session.run("flake8", *args)
+
+
+@nox.session(python=["3.9", "3.8"])
 def tests(session):
     args = session.posargs or ["--cov", "-m", "not e2e"]
     install_package(session)
     install(session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock")
     session.run("pytest", *args)
-
-
-@nox.session(python=["3.9", "3.8"])
-def lint(session):
-    args = session.posargs or locations
-    install(session, "flake8", "flake8-black", "flake8-bugbear", "flake8-import-order")
-    session.run("flake8", *args)
 
 
 @nox.session(python=["3.9"])
