@@ -7,3 +7,4 @@ __pycache__/
 /.devcontainer/
 /.mypy_cache/
 /.pytype/
+/docs/_build/
