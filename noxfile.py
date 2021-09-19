@@ -5,7 +5,7 @@ import nox
 
 package = "wikipedia_cli"
 locations = "src", "tests", "noxfile.py"
-nox.options.sessions = "lint", "mypy", "safety", "tests"
+nox.options.sessions = "lint", "mypy", "pytype", "safety", "tests"
 
 
 class Poetry:
@@ -73,6 +73,13 @@ def mypy(session):
     args = session.posargs or locations
     install(session, "mypy")
     session.run("mypy", *args)
+
+
+@nox.session(python=["3.9", "3.8"])
+def pytype(session):
+    args = session.posargs or ["--disable=import-error", *locations]
+    install(session, "pytype")
+    session.run("pytype", *args)
 
 
 @nox.session(python=["3.9"])
