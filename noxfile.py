@@ -8,7 +8,7 @@ import nox
 from nox.sessions import Session
 
 package = "wikipedia_cli"
-locations = "src", "tests", "noxfile.py"
+locations = "src", "tests", "noxfile.py", "docs/conf.py"
 nox.options.sessions = "lint", "mypy", "pytype", "safety", "tests"
 
 
@@ -168,7 +168,16 @@ def black(session: Session) -> None:
 
 @nox.session(python=["3.9", "3.8"])
 def typeguard(session: Session) -> None:
+    """Runtime type checking using Typeguard."""
     args = session.posargs or ["-m", "not e2e"]
     install_package(session)
     install(session, "pytest", "pytest-mock", "typeguard")
     session.run("pytest", f"--typeguard-packages={package}", *args)
+
+
+@nox.session(python="3.9")
+def docs(session: Session) -> None:
+    """Build the documentation."""
+    install_package(session)
+    install(session, "sphinx", "sphinx-autodoc-typehints")
+    session.run("sphinx-build", "docs", "docs/_build")
