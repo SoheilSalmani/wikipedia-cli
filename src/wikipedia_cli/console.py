@@ -3,7 +3,7 @@ import textwrap
 import click
 import requests
 
-from . import wikipedia, __version__
+from . import __version__, wikipedia
 
 
 @click.command()
@@ -20,7 +20,7 @@ def main(lang):
     try:
         data = wikipedia.get_random(lang=lang)
     except requests.RequestException as error:
-        raise click.ClickException(str(error))
+        raise click.ClickException(str(error)) from error
 
     title = data["title"]
     extract = data["extract"]

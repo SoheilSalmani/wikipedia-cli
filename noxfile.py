@@ -4,6 +4,9 @@ import tempfile
 import nox
 
 package = "wikipedia_cli"
+locations = "src", "tests", "noxfile.py"
+nox.options.sessions = "lint", "safety", "tests"
+
 
 class Poetry:
     def __init__(self, session):
@@ -24,13 +27,12 @@ class Poetry:
             yield requirements.name
 
     def version(self):
-        output = self.session.run(
-            "poetry", "version", external=True, silent=True
-        )
+        output = self.session.run("poetry", "version", external=True, silent=True)
         return output.split()[1]
 
     def build(self, *args):
         self.session.run("poetry", "build", *args, external=True, silent=True)
+
 
 def install_package(session):
     poetry = Poetry(session)
@@ -45,10 +47,34 @@ def install_package(session):
         "--no-deps", "--force-reinstall", f"dist/{package}-{version}-py3-none-any.whl"
     )
 
+
 def install(session, *args):
     poetry = Poetry(session)
     with poetry.export("--dev") as requirements:
         session.install(f"--constraint={requirements}", *args)
+
+
+@nox.session(python=["3.9", "3.8"])
+def lint(session):
+    args = session.posargs or locations
+    install(
+        session,
+        "flake8",
+        "flake8-bandit",
+        "flake8-black",
+        "flake8-bugbear",
+        "flake8-import-order",
+    )
+    session.run("flake8", *args)
+
+
+@nox.session(python=["3.9"])
+def safety(session):
+    poetry = Poetry(session)
+    with poetry.export("--dev") as requirements:
+        install(session, "safety")
+        session.run("safety", "check", f"--file={requirements}", "--bare")
+
 
 @nox.session(python=["3.9", "3.8"])
 def tests(session):
@@ -56,3 +82,10 @@ def tests(session):
     install_package(session)
     install(session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock")
     session.run("pytest", *args)
+
+
+@nox.session(python=["3.9"])
+def black(session):
+    args = session.posargs or locations
+    install(session, "black")
+    session.run("black", *args)
