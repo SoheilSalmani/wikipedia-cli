@@ -5,7 +5,7 @@ import nox
 
 package = "wikipedia_cli"
 locations = "src", "tests", "noxfile.py"
-nox.options.sessions = "lint", "safety", "tests"
+nox.options.sessions = "lint", "mypy", "safety", "tests"
 
 
 class Poetry:
@@ -66,6 +66,13 @@ def lint(session):
         "flake8-import-order",
     )
     session.run("flake8", *args)
+
+
+@nox.session(python=["3.9", "3.8"])
+def mypy(session):
+    args = session.posargs or locations
+    install(session, "mypy")
+    session.run("mypy", *args)
 
 
 @nox.session(python=["3.9"])
