@@ -13,9 +13,12 @@ keywords = ["wikipedia", "cli"]
 wikipedia-cli = "wikipedia_cli.console:main"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<3.10"
 click = "^8.0.1"
 requests = "^2.26.0"
+desert = "^2020.11.18"
+marshmallow = "^3.13.0"
+types-requests = "^2.25.6"
 
 [tool.poetry.dev-dependencies]
 coverage = {extras = ["toml"], version = "^5.5"}
@@ -30,6 +33,9 @@ flake8-bugbear = "^21.9.1"
 flake8-bandit = "^2.1.2"
 safety = "^1.10.3"
 mypy = "^0.910"
+typeguard = "^2.12.1"
+flake8-annotations = "^2.6.2"
+pytype = "^2021.9.9"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
