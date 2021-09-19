@@ -1,3 +1,5 @@
+"""Command-line interface."""
+
 import textwrap
 
 import click
@@ -18,6 +20,16 @@ from . import __version__, wikipedia
 )
 @click.version_option(version=__version__)
 def main(lang: str) -> None:
+    """The Wikipedia CLI project.
+
+    Args:
+        lang: The Wikipedia language edition. By default, the English Wikipedia
+            is used ("en").
+
+    Raises:
+        ClickException: The HTTP request failed or the HTTP response contained
+            an invalid body.
+    """
     try:
         page = wikipedia.get_random(lang=lang)
     except (requests.RequestException, marshmallow.ValidationError) as error:
