@@ -174,6 +174,7 @@ def typeguard(session: Session) -> None:
     install(session, "pytest", "pytest-mock", "typeguard")
     session.run("pytest", f"--typeguard-packages={package}", *args)
 
+
 @nox.session(python=["3.9", "3.8"])
 def xdoctest(session: Session) -> None:
     """Run examples with xdoctest."""
@@ -181,6 +182,7 @@ def xdoctest(session: Session) -> None:
     install_package(session)
     install(session, "xdoctest")
     session.run("python", "-m", "xdoctest", package, *args)
+
 
 @nox.session(python="3.9")
 def docs(session: Session) -> None:
