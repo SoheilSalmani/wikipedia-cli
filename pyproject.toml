@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "wikipedia-cli"
-version = "0.1.0"
+name = "wikipedia-cli-by-ss"
+version = "0.2.0"
 description = "A command-line application to retrieve random articles from Wikipedia."
 authors = ["Soheil Salmani <salmani.soheil@gmail.com>"]
 license = "MIT"
@@ -8,6 +8,9 @@ readme = "README.md"
 repository = "https://github.com/SoheilSalmani/wikipedia-cli"
 homepage = "https://github.com/SoheilSalmani/wikipedia-cli"
 keywords = ["wikipedia", "cli"]
+packages = [
+    { include = "wikipedia_cli", from = "src" }
+]
 
 [tool.poetry.scripts]
 wikipedia-cli = "wikipedia_cli.console:main"
@@ -41,6 +44,7 @@ darglint = "^1.8.0"
 xdoctest = "^0.15.8"
 Sphinx = "^4.2.0"
 sphinx-autodoc-typehints = "^1.12.0"
+codecov = "^2.1.12"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
