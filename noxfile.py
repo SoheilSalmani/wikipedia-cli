@@ -7,6 +7,7 @@ from typing import Iterator
 import nox
 from nox.sessions import Session
 
+wheel_prefix = "wikipedia_cli_by_ss"
 package = "wikipedia_cli"
 locations = "src", "tests", "noxfile.py", "docs/conf.py"
 nox.options.sessions = "lint", "mypy", "pytype", "safety", "tests"
@@ -84,7 +85,9 @@ def install_package(session: Session) -> None:
 
     version = poetry.version()
     session.install(
-        "--no-deps", "--force-reinstall", f"dist/{package}-{version}-py3-none-any.whl"
+        "--no-deps",
+        "--force-reinstall",
+        f"dist/{wheel_prefix}-{version}-py3-none-any.whl",
     )
 
 
