@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wikipedia-cli-by-ss"
-version = "0.1.0"
+version = "0.2.0"
 description = "A command-line application to retrieve random articles from Wikipedia."
 authors = ["Soheil Salmani <salmani.soheil@gmail.com>"]
 license = "MIT"
