@@ -190,3 +190,10 @@ def docs(session: Session) -> None:
     install_package(session)
     install(session, "sphinx", "sphinx-autodoc-typehints")
     session.run("sphinx-build", "docs", "docs/_build")
+
+@nox.session(python="3.9")
+def coverage(session: Session) -> None:
+    """Upload coverage data."""
+    install(session, "coverage[toml]", "codecov")
+    session.run("coverage", "xml", "--fail-under=0")
+    session.run("codecov", *session.posargs)
