@@ -2,4 +2,6 @@
 
 from importlib.metadata import version
 
-__version__ = version(__name__)
+package_name = "wikipedia-cli-by-ss"
+
+__version__ = version(package_name)
