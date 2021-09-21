@@ -7,6 +7,7 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/SoheilSalmani/wikipedia-cli"
 homepage = "https://github.com/SoheilSalmani/wikipedia-cli"
+documentation = "https://wikipedia-cli.readthedocs.io/en/latest/"
 keywords = ["wikipedia", "cli"]
 packages = [
     { include = "wikipedia_cli", from = "src" }
